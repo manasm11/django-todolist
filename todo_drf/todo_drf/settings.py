@@ -28,7 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '2ca94805801a.ngrok.io',
-    'localhost'
+    'localhost',
+    '127.0.0.1'
 ]
 
 
@@ -46,7 +47,6 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'api.apps.ApiConfig',
-    'frontend.apps.FrontendConfig',
 ]
 
 MIDDLEWARE = [

@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.http import JsonResponse
 
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from .models import TaskModel
@@ -35,6 +36,7 @@ def task_detail_view(request, pk, *args, **kwargs):
     return Response(serializer.data, status=200)
 
 @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
 def task_create_view(request, *args, **kwargs):
     serializer = TaskSerializer(data=request.data, many=False)
     if not serializer.is_valid(): return Response({'message':'Invalid request'}, status=400)
@@ -42,6 +44,7 @@ def task_create_view(request, *args, **kwargs):
     return Response(serializer.data, status=200)
 
 @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
 def task_update_view(request, pk, *args, **kwargs):
     task_exists = TaskModel.objects.filter(id=pk).exists()
     if not task_exists: return Response({'message':'Task not found'}, status=404)
@@ -53,6 +56,7 @@ def task_update_view(request, pk, *args, **kwargs):
     
 
 @api_view(['POST', 'DELETE'])
+# @permission_classes([IsAuthenticated])
 def task_delete_view(request, pk, *args, **kwargs):
     task_exists = TaskModel.objects.filter(id=pk).exists()
     if not task_exists: return Response({'message':'Task not found'}, status=404)
